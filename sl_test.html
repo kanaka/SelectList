@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset = UTF-8" />
+
+    <!--<link href="boxes.css" rel="stylesheet" type="text/css"/>-->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+
+    <script src="selectlist.js"></script>
+
+    <style>
+        .selecting {
+            background-color: #888;
+        }
+
+        .selected {
+            background-color: #f88;
+        }
+
+        .status {
+            background-color: #ffffc0;
+        }
+
+        .selectionB {
+        }
+        .selectionB li {
+            /*display: inline;
+            list-style: none;*/
+        }
+    </style>
+
+    <script>
+        function handler(target, select_list, dblclick, longclick) {
+            var ids = [], msg = "", i;
+            if (longclick) {
+                msg = "Long ";
+            } else {
+                msg = "Short ";
+            }
+            if (dblclick) {
+                msg += "double click ";
+            } else {
+                msg += "single click ";
+            }
+            msg += "on select list: ";
+            for (i = 0; i < select_list.length; i++ ) {
+                ids.push(select_list[i].id);
+            }
+            msg += ids.join(", ");
+            target.innerText = msg;
+        }
+
+        window.onload = function () {
+            var sl = new SelectList(".selectionA li", "selecting", "selected",
+                {"callback": function (s, d, l) {
+                        handler($("#statusA")[0], s, d, l);
+                    }
+                });
+            var sl = new SelectList(".selectionB li", "selecting", "selected",
+                {"callback": function (s, d, l) {
+                        handler($("#statusB")[0], s, d, l);
+                    }
+                });
+        };
+    </script>
+</head>
+
+<body>
+
+    Select, multi-select and double click these items:
+
+    <hr>
+
+    <ul class="selectionA">
+        <li id="item-A1"> item A1
+        <li id="item-A2"> item A2
+        <li id="item-A3"> item A3
+        <li id="item-A4"> item A4
+        <li id="item-A5"> item A5
+        <li id="item-A6"> item A6
+        <li id="item-A7"> item A7
+        <li id="item-A8"> item A8
+    </ul>
+
+    Status A: <span id="statusA" class="status">Nothing selected</span>
+
+    <hr>
+
+    <ul class="selectionB">
+        <li id="item-B1"> item B1
+        <li id="item-B2"> item B2
+        <li id="item-B3"> item B3
+        <li id="item-B4"> item B4
+        <li id="item-B5"> item B5
+        <li id="item-B6"> item B6
+        <li id="item-B7"> item B7
+        <li id="item-B8"> item B8
+    </ul>
+
+    Status B: <span id="statusB" class="status" >Nothing selected</span>
+</body>
+</html>
